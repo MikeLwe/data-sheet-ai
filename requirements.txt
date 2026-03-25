@@ -1,5 +1,2 @@
 pytest
 coverage
-pandas
-sqlite3
-pathlib

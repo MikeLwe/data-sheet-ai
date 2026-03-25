@@ -1,16 +1,10 @@
 """
-Tests for read_csv()
+Tests for csv_loader Module
 """
 
 import csv_loader
 from unittest.mock import patch
 import pandas
-
-TEST = "Hello World"
-
-def test_basic():
-    """Sanity Check"""
-    assert TEST == "Hello World"
 
 def test_read_csv_1():
     """No Title Input & Read CSV Test"""

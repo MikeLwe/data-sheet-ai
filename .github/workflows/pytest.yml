@@ -1,4 +1,4 @@
-name: Generic Python Test
+name: Test Data Sheet AI Project
 
 on:
   push:

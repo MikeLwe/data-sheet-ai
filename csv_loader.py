@@ -1,6 +1,7 @@
 import pandas
-import sqlite3 as sql
+# import sqlite3 as sql
 from pathlib import Path
+import schema_manager
 
 def read_csv():
     path = input("Enter the path of the file you want to submit: ")
@@ -18,7 +19,7 @@ def csv_to_sql(content, title):
     # cursor = connection.cursor()
 
 
-    # run a query
+    # # run a query
     # cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} (id INTEGER, name TEXT)")
 
     # # insert data

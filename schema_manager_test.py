@@ -5,7 +5,6 @@ Tests for schema_manager Module
 import csv_loader
 import schema_manager
 from unittest.mock import patch
-import pandas
 
 def test_read_csv_1():
     """Column Schema String Test on test1.csv"""

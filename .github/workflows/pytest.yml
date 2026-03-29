@@ -9,48 +9,30 @@ on:
       - main
 
 jobs:
-  CSV_Loader_Test:
+  Tests:
+    name: Tests (${{ matrix.test_name }}) 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - test_name: CSV Loader
+            file_name: csv_loader_test.py
+          - test_name: Schema Manager
+            file_name: schema_manager_test.py
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: 3.13
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - run: pip install -r requirements.txt
 
-      - name: CSV Loader Tests
-        run: pytest csv_loader_test.py
+      - name: Run Tests
+        run: pytest ${{ matrix.file_name }}
 
-      - name: Run coverage
+      - name: Run Coverage
         run: |
-          coverage run -m pytest
-          coverage report
-
-  Schema_Manager_Test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.13
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: CSV Loader Tests
-        run: pytest csv_loader_test.py
-
-      - name: Run coverage
-        run: |
-          coverage run -m pytest
+          coverage run -m pytest ${{ matrix.file_name }}
           coverage report

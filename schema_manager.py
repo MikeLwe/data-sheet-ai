@@ -19,7 +19,7 @@ def create_table(content, title):
         values.append(f"{i}")
         #Below is ChatGPT code to help avoid SQL Injection
         values = content.iloc[i].to_list()
-        placeholders = ', '.join(['?'] * len(values))
+        placeholders = ', '.join(['?'] * (len(values)+1))
         query = f"INSERT INTO {title} VALUES ({placeholders})"
         cursor.execute(query, values)
 
@@ -34,7 +34,7 @@ def create_table(content, title):
 def col_schema(content):
     column_str = ""
     column_elements = []
-    column_elements.append('"Row_ID" INTEGER')
+    column_elements.append('"Row ID" INTEGER')
     col_name = content.columns.tolist()
     table_types = content.dtypes
     for field in col_name:

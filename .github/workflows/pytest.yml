@@ -13,6 +13,7 @@ jobs:
     name: Tests (${{ matrix.test_name }}) 
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: true
       matrix:
         include:
           - test_name: CSV Loader

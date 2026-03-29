@@ -15,7 +15,7 @@ def test_read_csv_1():
     # })
     correct_string = '"First Name" TEXT, "Last Name" TEXT, "School E-mail" TEXT'
     with patch("builtins.input", side_effect=["datatables/test1.csv", ""]):
-        test_data, = csv_loader.read_csv()
+        test_data, _ = csv_loader.read_csv()
         test_string = schema_manager.col_schema(test_data)
         assert correct_string == test_string
 
@@ -28,6 +28,6 @@ def test_read_csv_2():
     # })
     correct_string = '"First Name" TEXT, "Unique ID" TEXT, "ID" INTEGER'
     with patch("builtins.input", side_effect=["datatables/test2.csv", "Custom Table"]):
-        test_data, = csv_loader.read_csv()
+        test_data, _ = csv_loader.read_csv()
         test_string = schema_manager.col_schema(test_data)
         assert correct_string == test_string

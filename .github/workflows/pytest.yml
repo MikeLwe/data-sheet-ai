@@ -10,7 +10,7 @@ on:
 
 jobs:
   Tests:
-    name: Tests (${{ matrix.test_name }}) 
+    name: Test ${{ matrix.test_name }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true

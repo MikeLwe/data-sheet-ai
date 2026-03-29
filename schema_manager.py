@@ -7,9 +7,17 @@ def create_table(content, title):
     connection = sql.connect(database)
     cursor = connection.cursor()
 
-    #create a table
+    #get column headers
     col_head = col_schema(content)
-    cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} ({col_head})")
+
+    #error detection for whether to create or append table
+    table_exists = table_checker(cursor, title)
+    if table_exists:
+        #query for user to choose to append csv contents, create new table, or stop creating table
+        table_decision = input("")
+        #IMPLEMENT STUFF HERE --------------------
+    else:
+        cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} ({col_head})")
 
     #insert data into table
     col_name = content.columns.tolist()
@@ -30,8 +38,8 @@ def create_table(content, title):
     connection.close()
     return
 
-
 def col_schema(content):
+    """Format the contents of the CSV file into SQL strings"""
     column_str = ""
     column_elements = []
     column_elements.append('"Row ID" INTEGER')
@@ -43,6 +51,16 @@ def col_schema(content):
         column_elements.append(f'"{field}" {data_type}')
     column_str = ", ".join(column_elements)
     return column_str
+
+def table_checker(cursor, title):
+    """Checks if a table exists in the database or not"""
+    #help from stackoverflow (1)
+    cursor.execute(f"SELECT  name FROM sqlite_master WHERE type='table' AND name=?",(title,))
+    count = cursor.fetchone()
+    if count:
+        return True
+    else:
+        return False
 
 #From ChatGPT
 def map_dtype_to_sql(dtype):
@@ -63,11 +81,3 @@ def map_dtype_to_sql(dtype):
     
 if __name__ == '__main__':
     print("test")
-
-    # correct_data = pandas.DataFrame({
-    #     "First Name": ["Alice", "Bryce", "Carlos"],
-    #     "Last Name": ["A", "B", "C"],
-    #     "School E-mail": ["alice@bu.edu", "bryce@bu.edu", "carl@bu.edu"]
-    # })
-    # test = correct_data.iloc[0].to_list()
-    # print(test)

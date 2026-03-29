@@ -16,5 +16,9 @@ Thigns to Consider/Look At:
 
 Problems to Fix:
 - [x] Open and close connections
-- [] Review structure of code with AI
-- [] Error message/Options to deal with similar columns names/tables
+- [ ] Review structure of code with AI
+- [ ] Error message/Options to deal with similar columns names/tables
+- [ ] If doing multiple databases, implement/update functions as appropriate
+
+Website Links Used:
+1. https://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists#:~:text=Comments,-Add%20a%20comment&text=If%20the%20resulting%20table%20is,can%20also%20be%20a%20view.

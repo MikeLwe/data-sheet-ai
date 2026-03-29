@@ -15,12 +15,12 @@ def create_table(content, title):
     col_name = content.columns.tolist()
     id = len(col_name)
     for i in range(id):
-        values = []
-        values.append(f"{i}")
+        values = [i] + content.iloc[i].to_list()
         #Below is ChatGPT code to help avoid SQL Injection
-        values = content.iloc[i].to_list()
-        placeholders = ', '.join(['?'] * (len(values)+1))
+        #creates a list with the placeholder ? for each column
+        placeholders = ', '.join(['?'] * (len(values))) 
         query = f"INSERT INTO {title} VALUES ({placeholders})"
+        #replaces the placeholder '?' in the query with "values"
         cursor.execute(query, values)
 
     # save changes

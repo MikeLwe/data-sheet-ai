@@ -17,7 +17,7 @@ if __name__ == '__main__':
     """
     datatables/test1.csv
     Nice formatting:
-    .mode column
+    .mode box
     .headers on
     """
     file_content, table_title = read_csv()

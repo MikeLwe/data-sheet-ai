@@ -13,46 +13,14 @@ def read_csv():
     content = pandas.read_csv(path)
     return content, title
 
-def csv_to_sql(content, title):
-
-    # connection = sql.connect('database.db')
-    # cursor = connection.cursor()
-
-
-    # # run a query
-    # cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} (id INTEGER, name TEXT)")
-
-    # # insert data
-    # cursor.execute("INSERT INTO users VALUES (1, 'Alice')")
-
-    # # save changes
-    # connection.commit()
-    return
-
-def type_to_sql(content):
-    column_str = ""
-    col_name = content.columns.tolist()
-    table_types = content.dtypes
-    for field in col_name:
-        data_type = table_types[field]
-        data_type = map_dtype_to_sql(data_type)
-        column_str += f"{field} {data_type}"
-    return column_str
-
-#From ChatGPT, converting dtype result to SQL strings
-def map_dtype_to_sql(dtype):
-    if pandas.api.types.is_integer_dtype(dtype):
-        return "INTEGER"
-    elif pandas.api.types.is_float_dtype(dtype):
-        return "REAL"
-    elif pandas.api.types.is_bool_dtype(dtype):
-        return "BOOLEAN"
-    elif pandas.api.types.is_datetime64_any_dtype(dtype):
-        return "DATETIME"
-    else:
-        return "TEXT"
-
 if __name__ == '__main__':
+    """
+    datatables/test1.csv
+    .open "C:/Users/micha/OneDrive/Desktop/Boston University Class Files/2026 Junior Spring/EC 530 Software Engineering Principles/Repositories/data-sheet-ai/database.db"
+    Nice formatting:
+    .mode column
+    .headers on
+    """
     file_content, table_title = read_csv()
-    print(table_title)
+    schema_manager.create_table(file_content, table_title)
 

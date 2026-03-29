@@ -15,9 +15,13 @@ def create_table(content, title):
     col_name = content.columns.tolist()
     id = len(col_name)
     for i in range(id):
+        values = []
+        values.append(f"{i}")
+        #Below is ChatGPT code to help avoid SQL Injection
         values = content.iloc[i].to_list()
-        value_string = ', '.join(values)
-        cursor.execute(f"INSERT INTO {title} VALUES {value_string})")
+        placeholders = ', '.join(['?'] * len(values))
+        query = f"INSERT INTO {title} VALUES ({placeholders})"
+        cursor.execute(query, values)
 
     # save changes
     connection.commit()
@@ -30,6 +34,7 @@ def create_table(content, title):
 def col_schema(content):
     column_str = ""
     column_elements = []
+    column_elements.append('"Row_ID", INTEGER')
     col_name = content.columns.tolist()
     table_types = content.dtypes
     for field in col_name:
@@ -39,8 +44,12 @@ def col_schema(content):
     column_str = ", ".join(column_elements)
     return column_str
 
-#From ChatGPT, converting dtype result to SQL strings
+#From ChatGPT
 def map_dtype_to_sql(dtype):
+    """
+    Converting dtype result to SQL type strings
+    Parameter: dtype (string) - the data type of a column in a csv
+    """
     if pandas.api.types.is_integer_dtype(dtype):
         return "INTEGER"
     elif pandas.api.types.is_float_dtype(dtype):

@@ -34,7 +34,7 @@ def create_table(content, title):
 def col_schema(content):
     column_str = ""
     column_elements = []
-    column_elements.append('"Row_ID", INTEGER')
+    column_elements.append('"Row_ID" INTEGER')
     col_name = content.columns.tolist()
     table_types = content.dtypes
     for field in col_name:

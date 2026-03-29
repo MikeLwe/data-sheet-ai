@@ -16,7 +16,6 @@ def read_csv():
 if __name__ == '__main__':
     """
     datatables/test1.csv
-    .open "C:/Users/micha/OneDrive/Desktop/Boston University Class Files/2026 Junior Spring/EC 530 Software Engineering Principles/Repositories/data-sheet-ai/database.db"
     Nice formatting:
     .mode column
     .headers on

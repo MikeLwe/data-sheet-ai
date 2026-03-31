@@ -7,6 +7,17 @@ database = 'database.db'
 #error log config already initialized, so unnecessary to reinitialize
 logger = logging.getLogger(__name__)
 
+def confirm(prompt="Are you sure you want to proceed? (y/n): "):
+    while True:
+        choice = input(prompt).strip().lower()
+        if choice in ("y", "yes", "Y", "Yes"):
+            return True
+        elif choice in ("n", "no", "N", "No"):
+            return False
+        else:
+            print("Please enter 'y' or 'n'.")
+            raise ValueError("Invalid User Input for Confirm Prompt.")
+
 def create_table(content, title):
     connection = sql.connect(database)
     cursor = connection.cursor()
@@ -18,13 +29,15 @@ def create_table(content, title):
     table_exists = table_checker(cursor, title)
     try:
         if table_exists:
-            #query for user to choose to append csv contents, create new table, or stop creating table
+            #query for user to choose to append csv contents, create new table, 
+            #overwrite the data and create a new table or stop creating table
             str_decision = input(
                 "This table title already exists.\n"
                 "Choose an option:\n"
                 "  (1) append table content\n"
                 "  (2) create new table\n"
-                "  (3) stop making a table\n\n"
+                "  (3) replace the existing table\n"
+                "  (4) stop making a table\n\n"
                 "Input the choice by number: "
             )
             table_decision = int(str_decision)
@@ -35,6 +48,17 @@ def create_table(content, title):
                 #DONT FORGET TO AVOID SQL INJECTION ----------------
                 cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} ({col_head})")
             elif table_decision == 3:
+                print("Replacing a table CANNOT be undone.")
+                misinput_safety = confirm()
+                if misinput_safety:
+                    print("Deleting old table...")
+                    cursor.execute(f"DROP TABLE {title}")
+                    cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} ({col_head})")
+                else:
+                    #IMPLEMENT-------
+                    print("supposed to repeat user query")
+
+            elif table_decision == 4:
                 print("Stopping all actions...")
                 # save changes
                 connection.commit()
@@ -43,12 +67,12 @@ def create_table(content, title):
                 connection.close()
                 return
             else:
-                print("Invalid input. Please enter 1, 2, or 3.")
+                print("Invalid input. Please enter 1, 2, 3, or 4.")
 
     #Log an error with a message and information such as date and time
     except ValueError:
-        logging.error(f"User entered non-integer input. User input: {str_decision}", exc_info=True)
-        print("Invalid input. Please enter a number.")
+        logging.error(f"User entered an invalid input. User input: {str_decision}", exc_info=True)
+        print("Invalid input.")
 
     except Exception as e:
         logging.error("Unexpected error occurred", exc_info=True)

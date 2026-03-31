@@ -84,10 +84,11 @@ def create_table(content, title):
         cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} ({col_head})")
 
     #insert data into table
-    col_name = content.columns.tolist()
-    id = len(col_name)
-    for i in range(id):
-        values = [i] + content.iloc[i].to_list()
+    #CHANGE BELOW LINE LATER FOR EMPTY TABLE WITH COLUMNS
+    first_col_values = content.iloc[:,0].tolist()
+    num_rows = len(first_col_values)
+    for i in range(num_rows):
+        values = [i] + content.iloc[i].tolist()
         #Below is ChatGPT code to help avoid SQL Injection
         #creates a list with the placeholder ? for each column
         placeholders = ', '.join(['?'] * (len(values))) 
@@ -123,7 +124,7 @@ def col_schema(content):
 def table_checker(cursor, title):
     """Checks if a table exists in the database or not"""
     #help from stackoverflow (1)
-    cursor.execute(f"SELECT  name FROM sqlite_master WHERE type='table' AND name=?",(title,))
+    cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name=?",(title,))
     count = cursor.fetchone()
     if count:
         return True
@@ -146,6 +147,10 @@ def map_dtype_to_sql(dtype):
         return "DATETIME"
     else:
         return "TEXT"
+
+def get_data(query):
+
+    return
     
 if __name__ == '__main__':
     print("test")

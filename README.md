@@ -16,6 +16,7 @@ Thigns to Consider/Look At:
 
 Problems to Fix:
 - [x] Open and close connections
+- [ ] Implement retrieval functions in schema_manager
 - [ ] Review structure of code with AI
 - [ ] Error message/Options to deal with similar columns names/tables
 - [ ] If doing multiple databases, implement/update functions as appropriate

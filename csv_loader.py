@@ -22,8 +22,6 @@ def read_csv():
             #Use the filename as the title
             title = Path(path).stem
         content = pandas.read_csv(path)
-        #ChatGPT help: Convert table values into python types
-        content = content.astype(object)
         return content, title
     
     except FileNotFoundError:

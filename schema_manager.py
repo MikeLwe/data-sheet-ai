@@ -1,6 +1,7 @@
 import sqlite3 as sql
 import pandas
 import logging
+import numpy as np
 
 database = 'database.db'
 
@@ -91,6 +92,12 @@ def create_table(content, title):
         values = [i] + content.iloc[i].tolist()
         #Below is ChatGPT code to help avoid SQL Injection
         #creates a list with the placeholder ? for each column
+        values = [
+            int(v) if isinstance(v, (np.integer, np.int64, np.int32)) else
+            float(v) if isinstance(v, (np.floating, np.float64, np.float32)) else
+            v
+            for v in values
+        ]
         placeholders = ', '.join(['?'] * (len(values))) 
         #DONT FORGET TO AVOID SQL INJECTION FOR TITLE ----------------
         query = f"INSERT INTO {title} VALUES ({placeholders})"

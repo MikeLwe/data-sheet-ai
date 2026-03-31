@@ -13,6 +13,7 @@ def test_read_csv_1():
         "Last Name": ["A", "B", "C"],
         "School E-mail": ["alice@bu.edu", "bryce@bu.edu", "carl@bu.edu"]
     })
+    correct_data = correct_data.astypes(object)
     with patch("builtins.input", side_effect=["datatables/test1.csv", ""]):
         test_data, test_title = csv_loader.read_csv()
         assert correct_data.equals(test_data)
@@ -25,6 +26,7 @@ def test_read_csv_2():
         "Unique ID": ["12563U"],
         "ID": [1234567]
     })
+    correct_data = correct_data.astypes(object)
     with patch("builtins.input", side_effect=["datatables/test2.csv", "Custom Table"]):
         test_data, test_title = csv_loader.read_csv()
         assert correct_data.equals(test_data)

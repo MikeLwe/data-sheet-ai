@@ -2,6 +2,7 @@ import sqlite3 as sql
 import pandas
 import logging
 import numpy as np
+from tabulate import tabulate
 
 database = 'database.db'
 
@@ -49,6 +50,7 @@ def create_table(content, title):
                 #DONT FORGET TO AVOID SQL INJECTION ----------------
                 cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} ({col_head})")
             elif table_decision == 3:
+                #SOFT DELETE, make copy of table in deleted tables folder
                 print("Replacing a table CANNOT be undone.")
                 misinput_safety = confirm()
                 if misinput_safety:
@@ -78,7 +80,6 @@ def create_table(content, title):
     except Exception as e:
         logging.error("Unexpected error occurred", exc_info=True)
         print("Something went wrong.")
-        #IMPLEMENT STUFF HERE --------------------
     else:
         #DONT FORGET TO AVOID SQL INJECTION ----------------
         print("Creating table...")
@@ -148,14 +149,27 @@ def map_dtype_to_sql(dtype):
         return "INTEGER"
     elif pandas.api.types.is_float_dtype(dtype):
         return "REAL"
-    elif pandas.api.types.is_bool_dtype(dtype):
-        return "BOOLEAN"
     elif pandas.api.types.is_datetime64_any_dtype(dtype):
         return "DATETIME"
     else:
         return "TEXT"
 
 def get_data(query):
+    connection = sql.connect(database)
+    # connection.row_factory = sql.Row
+    cursor = connection.cursor()
+
+    cursor.execute(query)
+
+    #ChatGPT help for formatting
+    columns = [desc[0] for desc in cursor.description]
+    rows = cursor.fetchall()
+
+    print(tabulate(rows, headers=columns, tablefmt="grid"))
+
+
+    cursor.close()
+    connection.close()
 
     return
     

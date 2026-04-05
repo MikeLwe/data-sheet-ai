@@ -40,6 +40,7 @@ if __name__ == '__main__':
     .mode box
     .headers on
     """
-    file_content, table_title = read_csv()
-    schema_manager.create_table(file_content, table_title)
+    # file_content, table_title = read_csv()
+    # schema_manager.create_table(file_content, table_title)
+    schema_manager.get_data('select "First Name", "Row Id", "School E-mail" from test1 where "Row ID" < 2')
 

@@ -156,22 +156,28 @@ def map_dtype_to_sql(dtype):
 
 def get_data(query):
     connection = sql.connect(database)
-    # connection.row_factory = sql.Row
     cursor = connection.cursor()
 
-    cursor.execute(query)
+    try:
+        cursor.execute(query)
 
-    #ChatGPT help for formatting
-    columns = [desc[0] for desc in cursor.description]
-    rows = cursor.fetchall()
+        #ChatGPT help for formatting
+        columns = [desc[0] for desc in cursor.description]
+        rows = cursor.fetchall()
 
-    print(tabulate(rows, headers=columns, tablefmt="grid"))
+        print(tabulate(rows, headers=columns, tablefmt="grid"))
 
+    except sql.OperationalError:
+        logging.error(f"The query is invalid. Query: {query}", exc_info=True)
+        print("The query was somehow invalid.")
 
-    cursor.close()
-    connection.close()
+    except Exception as e:
+        logging.error("Unexpected error occurred", exc_info=True)
+        print("Something went wrong.")
 
-    return
+    finally:
+        cursor.close()
+        connection.close()
     
 if __name__ == '__main__':
     print("test")

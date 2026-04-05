@@ -1,0 +1,54 @@
+2026-04-05 17:48:27,397 - root - ERROR - Unexpected error occurred
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 59, in create_table
+    backup_title = make_backup(cursor, title)
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 173, in make_backup
+    new_title = title + "_" + key_count
+                ~~~~~~~~~~~~^~~~~~~~~~~
+TypeError: can only concatenate str (not "int") to str
+2026-04-05 17:49:58,779 - root - ERROR - Unexpected error occurred
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 59, in create_table
+    backup_title = make_backup(cursor, title)
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 179, in make_backup
+    key.commit()
+    ^^^^^^^^^^
+AttributeError: 'sqlite3.Cursor' object has no attribute 'commit'
+2026-04-05 17:51:00,459 - root - ERROR - Unexpected error occurred
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 59, in create_table
+    backup_title = make_backup(cursor, title)
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 174, in make_backup
+    cursor.execute(f"ALTER TABLE '{title}' RENAME to '{new_title}'")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: there is already another table or index with this name: test1_0
+2026-04-05 18:02:47,223 - root - ERROR - Unexpected error occurred
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 59, in create_table
+    backup_title = make_backup(cursor, title)
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 174, in make_backup
+    cursor.execute(f'ALTER TABLE "{title}" RENAME to "{new_title}"')
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: there is already another table or index with this name: test1_0
+2026-04-05 18:24:23,601 - root - ERROR - Unexpected error occurred
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 59, in create_table
+    backup_title = make_backup(cursor, title)
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 170, in make_backup
+    key.execute(f"INSERT INTO keys VALUES (?,'?')",(key_count, title))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.ProgrammingError: Incorrect number of bindings supplied. The current statement uses 1, and there are 2 supplied.
+2026-04-05 18:25:38,062 - root - ERROR - Unexpected error occurred
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 59, in create_table
+    backup_title = make_backup(cursor, title)
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 174, in make_backup
+    cursor.execute(f'ALTER TABLE "{title}" RENAME to "{new_title}"')
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: there is already another table or index with this name: test1_0
+2026-04-05 18:28:11,806 - root - ERROR - Unexpected error occurred
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 62, in create_table
+    cursor.execute(f"DROP TABLE {title}")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: test1

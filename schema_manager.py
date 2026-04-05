@@ -5,6 +5,8 @@ import numpy as np
 from tabulate import tabulate
 
 database = 'database.db'
+backup_key = 'backup_keys.db'
+backup_data = 'backup.db'
 
 #error log config already initialized, so unnecessary to reinitialize
 logger = logging.getLogger(__name__)
@@ -29,8 +31,8 @@ def create_table(content, title):
 
     #error detection for whether to create or append table
     table_exists = table_checker(cursor, title)
-    try:
-        if table_exists:
+    if table_exists:
+        try:
             #query for user to choose to append csv contents, create new table, 
             #overwrite the data and create a new table or stop creating table
             str_decision = input(
@@ -54,8 +56,9 @@ def create_table(content, title):
                 print("Replacing a table CANNOT be undone.")
                 misinput_safety = confirm()
                 if misinput_safety:
+                    backup_title = make_backup(cursor, title)
                     print("Deleting old table...")
-                    cursor.execute(f"DROP TABLE {title}")
+                    cursor.execute(f"DROP TABLE {backup_title}")
                     cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} ({col_head})")
                 else:
                     #IMPLEMENT-------
@@ -72,16 +75,17 @@ def create_table(content, title):
             else:
                 print("Invalid input. Please enter 1, 2, 3, or 4.")
 
-    #Log an error with a message and information such as date and time
-    except ValueError:
-        logging.error(f"User entered an invalid input. User input: {str_decision}", exc_info=True)
-        print("Invalid input.")
+        #Log an error with a message and information such as date and time
+        except ValueError:
+            logging.error(f"User entered an invalid input. User input: {str_decision}", exc_info=True)
+            print("Invalid input.")
 
-    except Exception as e:
-        logging.error("Unexpected error occurred", exc_info=True)
-        print("Something went wrong.")
+        except Exception as e:
+            logging.error("Unexpected error occurred", exc_info=True)
+            print("Something went wrong.")
     else:
         #DONT FORGET TO AVOID SQL INJECTION ----------------
+        #This path is for creating a table if there is no conflict
         print("Creating table...")
         cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} ({col_head})")
 
@@ -153,6 +157,29 @@ def map_dtype_to_sql(dtype):
         return "DATETIME"
     else:
         return "TEXT"
+
+def make_backup(cursor, title):
+    connection = sql.connect(backup_key)
+    key = connection.cursor()
+
+    key.execute(f'CREATE TABLE IF NOT EXISTS keys ("Row ID" INTEGER, "Table Title" TEXT)')
+
+    key.execute("SELECT COUNT(*) FROM keys")
+    key_count = key.fetchone()[0]
+
+    key.execute(f"INSERT INTO keys VALUES ({key_count}, '{title}')")
+    cursor.execute(f'ATTACH DATABASE "{backup_data}" AS backup_data')
+
+    new_title = f"{title}_{key_count}"
+    cursor.execute(f'ALTER TABLE "{title}" RENAME to "{new_title}"')
+
+    query = f'CREATE TABLE backup_data."{new_title}" AS SELECT * FROM "{new_title}"'
+    cursor.execute(query)
+
+    connection.commit()
+    key.close()
+    connection.close()
+    return new_title
 
 def get_data(query):
     connection = sql.connect(database)

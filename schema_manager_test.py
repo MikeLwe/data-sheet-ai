@@ -60,12 +60,12 @@ def test_table_checker_2():
 
 def test_get_schema():
     """Table Schema Prompt String Test on test_database.db"""
-    correct_string = """ - "test1" ("Row Id", ""First Name", "Last Name", "School E-mail") - "Custom Table" ("Row Id", "First Name", "Unique ID", "ID")"""
+    correct_string = """ - "test1" ("Row ID", ""First Name", "Last Name", "School E-mail") - "Custom Table" ("Row ID", "First Name", "Unique ID", "ID")"""
     with patch("builtins.input", side_effect=[""]):
         test_string = schema_manager.get_schema(database)
         assert correct_string == test_string
 
-# def test_get_schema_2():
+# def test_get_data_2():
 #     """Table Schema Prompt String Test on test2.csv"""
 #     correct_string = '"Custom Table" - ("First Name", "Unique ID", "ID")'
 #     with patch("builtins.input", side_effect=["Custom Table"]):

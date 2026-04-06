@@ -93,8 +93,8 @@ def create_table(content, title, database):
 
     #insert data into table
     #CHANGE BELOW LINE LATER FOR EMPTY TABLE WITH COLUMNS
-    first_col_values = content.iloc[:,0].tolist()
-    num_rows = len(first_col_values)
+    num_rows = len(content)
+    all_rows = []
     for i in range(num_rows):
         values = [i] + content.iloc[i].tolist()
         #Below is ChatGPT code to help avoid SQL Injection
@@ -105,10 +105,11 @@ def create_table(content, title, database):
             v
             for v in values
         ]
-        placeholders = ', '.join(['?'] * (len(values))) 
-        query = f'INSERT INTO "{title}" VALUES ({placeholders})'
+        placeholders = ', '.join(['?'] * (len(values)))
+        all_rows.append(values)
         #replaces the placeholder '?' in the query with "values"
-        cursor.execute(query, values)
+        
+    cursor.executemany(f'INSERT INTO "{title}" VALUES ({placeholders})', all_rows)
 
     # save changes
     connection.commit()
@@ -175,12 +176,9 @@ def confirm(prompt="Are you sure you want to proceed? (y/n): "):
             return False
         else:
             print("Please enter 'y' or 'n'.")
-            raise ValueError("Invalid User Input for Confirm Prompt.")
 
 def sanitize_text(text):
     #ChatGPT helped with the re import and usage
-    if not re.fullmatch(r"[A-Za-z0-9_ ]+", text):
-        raise ValueError("Invalid table name. Please only use letters, numbers, spaces, and underscores")
     #remove invalid characters
     text = re.sub(r"[^A-Za-z0-9_ ]+", "", text)
     return text
@@ -196,10 +194,12 @@ def make_backup(cursor, title):
     key.execute("SELECT COUNT(*) FROM keys")
     key_count = key.fetchone()[0]
 
-    key.execute(f"INSERT INTO keys VALUES ({key_count}, '{title}')")
+    key.execute("INSERT INTO keys VALUES (?, ?)", (key_count, title))
 
     #connect backup tables database with true database and copy the specified table over
     cursor.execute(f'ATTACH DATABASE "{backup_data}" AS backup_data')
+
+    title = sanitize_text(title)
 
     new_title = f"{title}_{key_count}"
     cursor.execute(f'ALTER TABLE "{title}" RENAME to "{new_title}"')

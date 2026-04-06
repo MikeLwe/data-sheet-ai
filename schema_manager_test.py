@@ -44,7 +44,6 @@ def test_table_checker_1():
         test_result = schema_manager.table_checker(test_cursor, test_title)
         test_connection.commit()
         test_connection.close()
-        # test_cursor.close()
         assert test_result
 
 def test_table_checker_2():
@@ -57,7 +56,6 @@ def test_table_checker_2():
         test_result = schema_manager.table_checker(test_cursor, test_title)
         test_connection.commit()
         test_connection.close()
-        # test_cursor.close()
         assert test_result
 
 def test_get_schema():

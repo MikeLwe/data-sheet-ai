@@ -226,6 +226,7 @@ def get_schema(database):
     finally:
         cursor.close()
         connection.close()
+        return prompt_tables
 
 
 def get_data(query, database):

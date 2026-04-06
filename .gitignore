@@ -1,10 +1,15 @@
-# Python-generated files
+#Source 3
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info/
+*.py[codz]
+*$py.class
 
-# Virtual environments
+# Environments
+.env
+.envrc
 .venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/

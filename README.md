@@ -45,3 +45,4 @@ Problems to Fix:
 Website Links Used:
 1. https://stackoverflow.com/questions/1601151/how-do-i-check-in-sqlite-whether-a-table-exists#:~:text=Comments,-Add%20a%20comment&text=If%20the%20resulting%20table%20is,can%20also%20be%20a%20view.
 2. https://www.reddit.com/r/learnpython/comments/1s77o5c/how_to_create_cli_with_python/#:~:text=For%20a%20first%20CLI:%20start,about%20what%20becomes%20a%20command.&text=If%20you%20want%20the%20least,already%20in%20the%20standard%20library.
+3. https://github.com/github/gitignore/blob/main/Python.gitignore

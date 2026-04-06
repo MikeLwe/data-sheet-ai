@@ -4,16 +4,17 @@ LLM uses an AI's API to convert the user's input into a valid SQL query
 
 from openai import OpenAI
 import schema_manager
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 database = 'database.db'
-
-# OPENAI_API_KEY=your_key_here
 
 def query_to_sql(natural_query):
     """
     Converts the natural language query into a SQL query using an LLM
     """
-    # client = OpenAI()
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     tables = schema_manager.get_schema(database)
 
@@ -24,9 +25,9 @@ def query_to_sql(natural_query):
     question and starts with SELECT. 2. Ensure the SQL is compatible with SQLite syntax and the 
     database. Output Format: - SQL Query
     """
-    # response = client.responses.create(model="gpt-5.4",input=prompt)
+    response = client.responses.create(model="gpt-5.4",input=prompt)
 
-    return natural_query
+    return response.output_text
 
 if __name__ == '__main__':
     print("test")

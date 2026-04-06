@@ -209,7 +209,7 @@ def get_schema(database):
         table_names = [table[0] for table in tables]
 
         for title in table_names:
-            cursor.execute(f"PRAGMA table_info({title})")
+            cursor.execute(f'PRAGMA table_info("{title}")')
             columns = cursor.fetchall()
             column_names = [f'"{col[1]}"' for col in columns]
             column_names = ", ".join(column_names)

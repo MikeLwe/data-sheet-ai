@@ -213,7 +213,7 @@ def get_schema(database):
             columns = cursor.fetchall()
             column_names = [f'"{col[1]}"' for col in columns]
             column_names = ", ".join(column_names)
-            prompt_tables = f'{prompt_tables} - "{title}" ({column_names}) '
+            prompt_tables = f'{prompt_tables} - "{title}" ({column_names})'
 
     except sql.OperationalError:
         logging.error(f"The query is invalid.", exc_info=True)

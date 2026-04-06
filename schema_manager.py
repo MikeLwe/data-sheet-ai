@@ -11,7 +11,7 @@ backup_data = 'backup.db'
 #error log config already initialized, so unnecessary to reinitialize
 logger = logging.getLogger(__name__)
 
-def create_table(content, title):
+def create_table(content, title, database):
     connection = sql.connect(database)
     cursor = connection.cursor()
 
@@ -20,8 +20,8 @@ def create_table(content, title):
 
     #error detection for whether to create or append table
     table_exists = table_checker(cursor, title)
-    if table_exists:
-        try:
+    try:
+        if table_exists:
             #query for user to choose to append csv contents, create new table, 
             #overwrite the data and create a new table or stop creating table
             str_decision = input(
@@ -64,19 +64,20 @@ def create_table(content, title):
             else:
                 print("Invalid input. Please enter 1, 2, 3, or 4.")
 
-        #Log an error with a message and information such as date and time
-        except ValueError:
-            logging.error(f"User entered an invalid input. User input: {str_decision}", exc_info=True)
-            print("Invalid input.")
+        else:
+            #DONT FORGET TO AVOID SQL INJECTION ----------------
+            #This path is for creating a table if there is no conflict
+            print("Creating table...")
+            cursor.execute(f'CREATE TABLE IF NOT EXISTS "{title}" ({col_head})')
 
-        except Exception as e:
-            logging.error("Unexpected error occurred", exc_info=True)
-            print("Something went wrong.")
-    else:
-        #DONT FORGET TO AVOID SQL INJECTION ----------------
-        #This path is for creating a table if there is no conflict
-        print("Creating table...")
-        cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} ({col_head})")
+    #Log an error with a message and information such as date and time
+    except ValueError:
+        logging.error(f"User entered an invalid input. User input: {str_decision}", exc_info=True)
+        print("Invalid input.")
+
+    except Exception as e:
+        logging.error("Unexpected error occurred", exc_info=True)
+        print("Something went wrong.")
 
     #insert data into table
     #CHANGE BELOW LINE LATER FOR EMPTY TABLE WITH COLUMNS
@@ -94,7 +95,7 @@ def create_table(content, title):
         ]
         placeholders = ', '.join(['?'] * (len(values))) 
         #DONT FORGET TO AVOID SQL INJECTION FOR TITLE ----------------
-        query = f"INSERT INTO {title} VALUES ({placeholders})"
+        query = f'INSERT INTO "{title}" VALUES ({placeholders})'
         #replaces the placeholder '?' in the query with "values"
         cursor.execute(query, values)
 
@@ -125,12 +126,19 @@ def col_schema(content):
 def table_checker(cursor, title):
     """Checks if a table exists in the database or not"""
     #help from stackoverflow (1)
-    cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name=?",(title,))
-    count = cursor.fetchone()
-    if count:
-        return True
-    else:
-        return False
+    try:
+        cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name=?",(title,))
+        count = cursor.fetchone()
+        if count:
+            return True
+        else:
+            return False
+    except sql.OperationalError:
+        logging.error(f"Title is incorrect here {title}", exc_info=True)
+        print("Something went wrong...")
+    except Exception:
+        logging.error("Something went wrong.", exc_info=True)
+        print("Unexpected Error.")
 
 #From ChatGPT
 def map_dtype_to_sql(dtype):
@@ -187,7 +195,40 @@ def make_backup(cursor, title):
     #return the new title so that outside function will know what the new name is
     return new_title
 
-def get_data(query):
+def get_schema(database):
+    prompt_tables = ""
+    connection = sql.connect(database)
+    cursor = connection.cursor()
+
+    try:
+        cursor.execute("SELECT name FROM sqlite_master WHERE type = 'table';")
+
+        tables = cursor.fetchall()
+
+        #ChatGPT help for formatting
+        table_names = [table[0] for table in tables]
+
+        for title in table_names:
+            cursor.execute(f"PRAGMA table_info({title})")
+            columns = cursor.fetchall()
+            column_names = [f'"{col[1]}"' for col in columns]
+            column_names = ", ".join(column_names)
+            prompt_tables = f'{prompt_tables} - "{title}" ({column_names}) '
+
+    except sql.OperationalError:
+        logging.error(f"The query is invalid.", exc_info=True)
+        print("The query was somehow invalid.")
+
+    except Exception as e:
+        logging.error("Unexpected error occurred", exc_info=True)
+        print("Something went wrong.")
+
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def get_data(query, database):
     connection = sql.connect(database)
     cursor = connection.cursor()
 

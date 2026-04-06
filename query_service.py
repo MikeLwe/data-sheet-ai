@@ -4,6 +4,7 @@ import schema_manager
 import logging
 
 logger = logging.getLogger(__name__)
+database = 'database.db'
 
 def main(natural_query):
     #llm converts this query to sql
@@ -11,7 +12,7 @@ def main(natural_query):
     try:
         test_query = sql_validator.validate_query(query)
         if test_query:
-            schema_manager.get_data(query)
+            schema_manager.get_data(query, database)
         else:
             print("Validator Rejected Query")
 

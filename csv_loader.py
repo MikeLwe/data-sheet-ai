@@ -17,7 +17,7 @@ def read_csv(path):
     try:
         content = pandas.read_csv(path)
         #NEED TO SANITIZE THE TITLE INPUT, MAYBE EVEN THE PATH
-        title = input("Enter the name of the table (no input defaults to file name):")
+        title = input("Enter the name of the table (no input defaults to file name): ")
         if title == "":
             #Use the filename as the title
             title = Path(path).stem
@@ -33,7 +33,7 @@ def read_csv(path):
 
 def main(path):
     file_content, table_title = read_csv(path)
-    schema_manager.create_table(file_content, table_title)
+    schema_manager.create_table(file_content, table_title, 'database.db')
 
 if __name__ == '__main__':
     main()

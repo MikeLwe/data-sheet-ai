@@ -1,4 +1,7 @@
 from openai import OpenAI
+import schema_manager
+
+database = 'database.db'
 
 def query_to_sql(natural_query):
     client = OpenAI()

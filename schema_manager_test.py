@@ -48,7 +48,7 @@ def test_table_checker_1():
 
 def test_table_checker_2():
     """Test table_checker 2"""
-    with patch("builtins.input", side_effect=["Custom Table"]):
+    with patch("builtins.input", side_effect=["Custom Table", "4"]):
         test_content, test_title = csv_loader.read_csv("datatables/test2.csv")
         schema_manager.create_table(test_content, test_title, database)
         test_connection = sql.connect(database)

@@ -20,6 +20,8 @@ jobs:
             file_name: csv_loader_test.py
           - test_name: Schema Manager
             file_name: schema_manager_test.py
+          - test_name: SQL Validator
+            file_name: sql_validator_test.py
 
     steps:
       - uses: actions/checkout@v4

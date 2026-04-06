@@ -47,7 +47,7 @@ def validate_query(query):
 
 #chatgpt helped a lot with this
 def string_check(query):
-    prohibited_keywords = {"DROP", "DELETE", "TRUNCATE", "ALTER", "SET", "INSERT", "UPDATE", "UNION"}
+    prohibited_keywords = {"DROP", "DELETE", "TRUNCATE", "ALTER", "SET", "INSERT", "UPDATE", "UNION", "MERGE", "CREATE"}
     query = query.upper()
     parsed = sqlparse.parse(query)
 

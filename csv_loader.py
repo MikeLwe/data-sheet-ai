@@ -1,3 +1,7 @@
+"""
+CSV Loader used to read csv files from a path and send it to the schema_manager
+"""
+
 import pandas
 import logging
 # import sqlite3 as sql

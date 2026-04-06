@@ -91,3 +91,39 @@ Traceback (most recent call last):
     title = sanitize_text(title)
   File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 185, in sanitize_text
 ValueError: Invalid table name. Please only use letters, numbers, spaces, and underscores
+2026-04-06 12:14:02,541 - root - ERROR - Invalid query: select * from test1 when Row ID < 2, near "when": syntax error
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\sql_validator.py", line 27, in validate_query
+    cursor.execute("EXPLAIN " + query)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: near "when": syntax error
+2026-04-06 12:14:10,845 - root - ERROR - Invalid query: select * from test1 where Row ID < 2, near "ID": syntax error
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\sql_validator.py", line 27, in validate_query
+    cursor.execute("EXPLAIN " + query)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: near "ID": syntax error
+2026-04-06 12:14:14,032 - root - ERROR - Invalid query: select * from test1 where Row ID < 2;, near "ID": syntax error
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\sql_validator.py", line 27, in validate_query
+    cursor.execute("EXPLAIN " + query)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: near "ID": syntax error
+2026-04-06 12:14:23,580 - root - ERROR - Invalid query: select * from test1 where Row ID < 2, near "ID": syntax error
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\sql_validator.py", line 27, in validate_query
+    cursor.execute("EXPLAIN " + query)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: near "ID": syntax error
+2026-04-06 12:14:41,771 - root - ERROR - Invalid query: select * from test1 where First Name equals Alice, near "Name": syntax error
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\sql_validator.py", line 27, in validate_query
+    cursor.execute("EXPLAIN " + query)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: near "Name": syntax error
+2026-04-06 12:15:21,106 - root - ERROR - Invalid query: select * from test1 where "First Name" equals "Alice", near "equals": syntax error
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\sql_validator.py", line 27, in validate_query
+    cursor.execute("EXPLAIN " + query)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: near "equals": syntax error

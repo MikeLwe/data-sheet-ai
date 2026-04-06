@@ -1,3 +1,7 @@
+"""
+CLI Interface where users can ask to input a query to get information or uplaod a csv
+"""
+
 #used source 2
 import argparse
 import shlex

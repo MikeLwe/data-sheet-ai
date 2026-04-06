@@ -1,3 +1,9 @@
+"""
+Schema Manager handles everything related to the database.
+It creates tables to be put in the database, provides users title options for table creation,
+and returns information about tables in the database.
+"""
+
 import sqlite3 as sql
 import pandas
 import logging

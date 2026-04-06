@@ -1,3 +1,9 @@
+"""
+Query Service acts as the middle-man between the LLM, SQL Validator, and Schema Manager.
+It runs the user's query into the LLM, validates the output with SQL Validator, and gets the
+information from the Schema Manager.
+"""
+
 import sql_validator
 import llm
 import schema_manager

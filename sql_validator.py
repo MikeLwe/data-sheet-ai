@@ -1,11 +1,8 @@
-#Ensure results are valid
-# -table exists, columns are right
-
-#Words to avoid Drop, Inject, Set/Corruption?
-#Protect database from LLM query
-
-#Make sure errors/catches are notified in error_log and printed
-#back to the user
+"""
+SQL Validator ensures that a query is:
+1. check if a query is valid for the database
+2. ensure that the query is not illegal
+"""
 
 import sqlite3 as sql
 import logging
@@ -34,7 +31,7 @@ def validate_query(query):
 
     except sql.OperationalError as e:
         logging.error(f"Invalid query: {query}, {e}", exc_info=True)
-        print("SQL Query is invalid for thr database.")
+        print("SQL Query is invalid for the database.")
         return False
     
     except ValueError as e:

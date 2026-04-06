@@ -8,11 +8,14 @@ import csv_loader
 logger = logging.getLogger(__name__)
 
 def query_handler(args):
+    query = " ".join(args.query)
+    print("Reading your query...")
+    query_service.main(query)
     pass
 
 def csv_handler(args):
     print("Uploading CSV to database...\n")
-    csv_loader.main(args.file)
+    csv_loader.main(args.filepath) #consider spaces in file path?
     return
 
 #chatgpt to help with structure for learning argparse and how cli interfaces works
@@ -25,12 +28,12 @@ def main():
 
     #query subcommand
     parser_query = subparsers.add_parser("query")
-    parser_query.add_argument("query", type=str)
+    parser_query.add_argument("query", nargs="+") #joins string args together
     parser_query.set_defaults(func=query_handler)
 
     #upload subcommand
     parser_upload = subparsers.add_parser("upload")
-    parser_upload.add_argument("file", type=str)
+    parser_upload.add_argument("filepath", type=str)
     parser_upload.set_defaults(func=csv_handler)
 
     print("Interactive CLI for DataSheet AI running. Type 'exit' to quit.")
@@ -48,6 +51,7 @@ def main():
 
             # Split input like shell arguments
             #ex: query datatables/test1.csv => ['query', 'datatables/test1.csv']
+            #good for flexibility
             args_list = shlex.split(user_input)
             if not args_list:
                 continue

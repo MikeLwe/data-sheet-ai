@@ -85,4 +85,9 @@ Traceback (most recent call last):
   File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\sql_validator.py", line 28, in validate_query
     cursor.execute("EXPLAIN " + query)
     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
-sqlite3.OperationalError: no such table: test
+sqlite3.OperationalError: no such table: test2026-04-06 02:59:00,095 - root - ERROR - User entered an invalid input. User input: 2
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 50, in create_table
+    title = sanitize_text(title)
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 185, in sanitize_text
+ValueError: Invalid table name. Please only use letters, numbers, spaces, and underscores

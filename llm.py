@@ -3,6 +3,8 @@ import schema_manager
 
 database = 'database.db'
 
+# OPENAI_API_KEY=your_key_here
+
 def query_to_sql(natural_query):
     client = OpenAI()
 

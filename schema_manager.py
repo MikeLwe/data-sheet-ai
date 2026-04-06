@@ -2,6 +2,7 @@ import sqlite3 as sql
 import pandas
 import logging
 import numpy as np
+import re
 from tabulate import tabulate
 
 database = 'database.db'
@@ -20,52 +21,63 @@ def create_table(content, title, database):
 
     #error detection for whether to create or append table
     table_exists = table_checker(cursor, title)
+    title = sanitize_text(title)
     try:
         if table_exists:
-            #query for user to choose to append csv contents, create new table, 
-            #overwrite the data and create a new table or stop creating table
-            str_decision = input(
-                "This table title already exists.\n"
-                "Choose an option:\n"
-                "  (1) append table content\n"
-                "  (2) create new table\n"
-                "  (3) replace the existing table\n"
-                "  (4) stop making a table\n\n"
-                "Input the choice by number: "
-            )
-            table_decision = int(str_decision)
-            if table_decision == 1:
-                print("Appending contents...")
-            elif table_decision == 2:
-                title = input("Creating a New Table...\nInput a new title: ")
-                #DONT FORGET TO AVOID SQL INJECTION ----------------
-                cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} ({col_head})")
-            elif table_decision == 3:
-                #SOFT DELETE, make copy of table in deleted tables folder
-                print("Replacing a table CANNOT be undone.")
-                misinput_safety = confirm()
-                if misinput_safety:
-                    backup_title = make_backup(cursor, title)
-                    print("Deleting old table...")
-                    cursor.execute(f"DROP TABLE {backup_title}")
-                    cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} ({col_head})")
+            while True:
+                #query for user to choose to append csv contents, create new table, 
+                #overwrite the data and create a new table or stop creating table
+                str_decision = input(
+                    "This table title already exists.\n"
+                    "Choose an option:\n"
+                    "  (1) append ALL row contents\n"
+                    "  (2) create new table\n"
+                    "  (3) replace the existing table\n"
+                    "  (4) stop making a table\n\n"
+                    "Input the choice by number: "
+                )
+                table_decision = int(str_decision)
+                if table_decision == 1:
+                    #APPEND ROWS, append rows with matching columns, otherwise error
+                    print("Appending row contents...")
+                    break
+                elif table_decision == 2:
+                    #NEW NAME, make a table with a different name
+                    print("Creating a New Table...")
+                    #loop to give user option for multiple titles in case invalid
+                    while True:
+                        new_title = input("Input a new title: ")
+                        title = sanitize_text(new_title)
+                        if title != "" and not table_checker(cursor, title):
+                            cursor.execute(f'CREATE TABLE IF NOT EXISTS "{title}" ({col_head})')
+                            break
+                        else:
+                            print("Invalid Title. Please try again.")
+                    break
+                elif table_decision == 3:
+                    #SOFT DELETE, make copy of table in deleted tables folder
+                    print("Replacing a table CANNOT be undone.")
+                    misinput_safety = confirm()
+                    if misinput_safety:
+                        backup_title = make_backup(cursor, title)
+                        print("Deleting old table...")
+                        cursor.execute(f"DROP TABLE {backup_title}")
+                        cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} ({col_head})")
+                        break
+
+                elif table_decision == 4:
+                    #STOP, closes everything and ends action
+                    print("Stopping all actions...")
+                    #saves changes
+                    connection.commit()
+
+                    #closes the connection
+                    connection.close()
+                    return
                 else:
-                    #IMPLEMENT-------
-                    print("supposed to repeat user query")
-
-            elif table_decision == 4:
-                print("Stopping all actions...")
-                # save changes
-                connection.commit()
-
-                #close the connection
-                connection.close()
-                return
-            else:
-                print("Invalid input. Please enter 1, 2, 3, or 4.")
+                    print("Invalid input. Please enter 1, 2, 3, or 4.")
 
         else:
-            #DONT FORGET TO AVOID SQL INJECTION ----------------
             #This path is for creating a table if there is no conflict
             print("Creating table...")
             cursor.execute(f'CREATE TABLE IF NOT EXISTS "{title}" ({col_head})')
@@ -94,7 +106,6 @@ def create_table(content, title, database):
             for v in values
         ]
         placeholders = ', '.join(['?'] * (len(values))) 
-        #DONT FORGET TO AVOID SQL INJECTION FOR TITLE ----------------
         query = f'INSERT INTO "{title}" VALUES ({placeholders})'
         #replaces the placeholder '?' in the query with "values"
         cursor.execute(query, values)
@@ -165,6 +176,14 @@ def confirm(prompt="Are you sure you want to proceed? (y/n): "):
         else:
             print("Please enter 'y' or 'n'.")
             raise ValueError("Invalid User Input for Confirm Prompt.")
+
+def sanitize_text(text):
+    #ChatGPT helped with the re import and usage
+    if not re.fullmatch(r"[A-Za-z0-9_ ]+", text):
+        raise ValueError("Invalid table name. Please only use letters, numbers, spaces, and underscores")
+    #remove invalid characters
+    text = re.sub(r"[^A-Za-z0-9_ ]+", "", text)
+    return text
 
 def make_backup(cursor, title):
     #connect to the backup_key while having cursor connected to the database

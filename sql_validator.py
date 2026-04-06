@@ -16,6 +16,9 @@ logger = logging.getLogger(__name__)
 database = 'database.db'
 
 def validate_query(query):
+    """
+    Validates whether a query is allowed to be run
+    """
     try:
         connection = sql.connect(database)
         cursor = connection.cursor()
@@ -47,6 +50,9 @@ def validate_query(query):
 
 #chatgpt helped a lot with this
 def string_check(query):
+    """
+    Checks a query for illegal commands and returns an error if it is
+    """
     prohibited_keywords = {"DROP", "DELETE", "TRUNCATE", "ALTER", "SET", "INSERT", "UPDATE", "UNION", "MERGE", "CREATE"}
     query = query.upper()
     parsed = sqlparse.parse(query)

@@ -7,6 +7,10 @@ logger = logging.getLogger(__name__)
 database = 'database.db'
 
 def main(natural_query):
+    """
+    Runs the LLM with the natural_query as the input and validates the LLM's query.
+    Prints the contents of the table with schema_manager's get_data function 
+    """
     #llm converts this query to sql
     query = llm.query_to_sql(natural_query)
     try:

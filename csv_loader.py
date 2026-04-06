@@ -14,6 +14,11 @@ logging.basicConfig(
 )
 
 def read_csv(path):
+    """
+    Reads a CSV located at the variable path
+    Returns the CSV content and the title the user wants to have in the form of a tuple:
+    (content, title) 
+    """
     try:
         content = pandas.read_csv(path)
         #NEED TO SANITIZE THE TITLE INPUT, MAYBE EVEN THE PATH
@@ -32,6 +37,10 @@ def read_csv(path):
         print("Something went wrong.")
 
 def main(path):
+    """
+    Runs read_csv and transfers the information to schema_manager's create table to
+    to create a table
+    """
     file_content, table_title = read_csv(path)
     schema_manager.create_table(file_content, table_title, 'database.db')
 

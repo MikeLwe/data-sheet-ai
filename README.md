@@ -2,22 +2,22 @@
 Database generation with natural language using an LLM
 
 Design
-- Only have the schema_manager access the database and nothing else
+1. Only have the schema_manager access the database and nothing else
 - This is to centralize all the sqlite functions that edit the database to keep track of any errors that occur and makes it easier to prevent the llm or the query service from affecting the database
 
-- Added cli_interface rather than just having a main file run once based on an input
+2. Added cli_interface rather than just having a main file run once based on an input
 - I wanted to have the ability to run multiple queries without restarting the application and be able to upload multiple CSVs in one go.
 
-- Implemented a Soft Delete option for when there is a table with the same title as what the user requested, saving the "deleted" tables into another database with a backup_key database to remember the multiple types of tables. (Table title notation is f"{title}_{key_value}")
+3. Implemented a Soft Delete option for when there is a table with the same title as what the user requested, saving the "deleted" tables into another database with a backup_key database to remember the multiple types of tables. (Table title notation is f"{title}_{key_value}")
 - This protects against accidental deletes and keeps a proper records of all the tables, along with avoiding errors with duplicate names.
 
-- Used pandas to read the CSV in the csv_loader.
+4. Used pandas to read the CSV in the csv_loader.
 - This is because the pandas DataFrame is great for readability, similar to json, when it reads a csv file.
 
-- Did not implement appending columns to an existing table and only allowing rows to be appended.
+5. Did not implement appending columns to an existing table and only allowing rows to be appended.
 - If the user wants to append columns for all the rows that exist in the table, I think it is better to archive the old data and replace the table rather than appending a column for efficiency. This also reduces the complexity of the code.
 
-- Use input function and confirmation with infinite while loop to allow user to decide what to do
+6. Use input function and confirmation with infinite while loop to allow user to decide what to do
 - For user interface to be better in case a typo occurs or the user misunderstands the prompt, I allow the user to decide again if the want to continue performing that task.
 
 

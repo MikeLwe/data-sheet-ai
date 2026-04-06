@@ -8,18 +8,27 @@ import csv_loader
 logger = logging.getLogger(__name__)
 
 def query_handler(args):
+    """
+    Handles the query input from the user to run the query_service main function
+    """
     query = " ".join(args.query)
     print("Reading your query...")
     query_service.main(query)
     pass
 
 def csv_handler(args):
+    """
+    Handles the upload input from the user to run the csv_loader main function
+    """
     print("Uploading CSV to database...\n")
     csv_loader.main(args.filepath) #consider spaces in file path?
     return
 
 #chatgpt to help with structure for learning argparse and how cli interfaces works
 def main():
+    """
+    Runs the CLI Interface
+    """
     #create a parser
     parser = argparse.ArgumentParser(description = "A simple CLI example using argparse")
 

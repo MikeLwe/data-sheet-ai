@@ -6,6 +6,9 @@ database = 'database.db'
 # OPENAI_API_KEY=your_key_here
 
 def query_to_sql(natural_query):
+    """
+    Converts the natural language query into a SQL query using an LLM
+    """
     client = OpenAI()
 
     tables = schema_manager.get_schema(database)

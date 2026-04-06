@@ -13,6 +13,9 @@ backup_data = 'backup.db'
 logger = logging.getLogger(__name__)
 
 def create_table(content, title, database):
+    """
+    Creates a table based on the content and title in the selected database
+    """
     connection = sql.connect(database)
     cursor = connection.cursor()
 
@@ -168,6 +171,7 @@ def map_dtype_to_sql(dtype):
         return "TEXT"
     
 def confirm(prompt="Are you sure you want to proceed? (y/n): "):
+    """Generic confirmation function to see if the user wants to proceed"""
     while True:
         choice = input(prompt).strip().lower()
         if choice in ("y", "yes", "Y", "Yes"):
@@ -178,12 +182,14 @@ def confirm(prompt="Are you sure you want to proceed? (y/n): "):
             print("Please enter 'y' or 'n'.")
 
 def sanitize_text(text):
+    """Sanitizes text to remove potentially harmful characters"""
     #ChatGPT helped with the re import and usage
     #remove invalid characters
     text = re.sub(r"[^A-Za-z0-9_ ]+", "", text)
     return text
 
 def make_backup(cursor, title):
+    """Creates a backup of a table named title in the database that the cursor is pointing to"""
     #connect to the backup_key while having cursor connected to the database
     connection = sql.connect(backup_key)
     key = connection.cursor()
@@ -215,6 +221,7 @@ def make_backup(cursor, title):
     return new_title
 
 def get_schema(database):
+    """Retrieves the schema information of all tables of a database for the LLM prompt"""
     prompt_tables = ""
     connection = sql.connect(database)
     cursor = connection.cursor()
@@ -249,6 +256,7 @@ def get_schema(database):
 
 
 def get_data(query, database):
+    """Returns the contents of a table in database based on the SQL query"""
     connection = sql.connect(database)
     cursor = connection.cursor()
 

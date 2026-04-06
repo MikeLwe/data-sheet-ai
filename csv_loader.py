@@ -13,15 +13,14 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 
-def read_csv():
+def read_csv(path):
     try:
-        path = input("Enter the path of the file you want to submit: ")
+        content = pandas.read_csv(path)
         #NEED TO SANITIZE THE TITLE INPUT, MAYBE EVEN THE PATH
         title = input("Enter the name of the table (no input defaults to file name):")
         if title == "":
             #Use the filename as the title
             title = Path(path).stem
-        content = pandas.read_csv(path)
         return content, title
     
     except FileNotFoundError:
@@ -32,15 +31,11 @@ def read_csv():
         logging.error("Unexpected error occurred", exc_info=True)
         print("Something went wrong.")
 
+def main(path):
+    file_content, table_title = read_csv(path)
+    schema_manager.create_table(file_content, table_title)
 
 if __name__ == '__main__':
-    """
-    datatables/test1.csv
-    Nice formatting:
-    .mode box
-    .headers on
-    """
-    file_content, table_title = read_csv()
-    schema_manager.create_table(file_content, table_title)
+    main()
     # schema_manager.get_data('select "First Name", "Row Id", "School E-mail" from test1 where "Row ID" < 2')
 

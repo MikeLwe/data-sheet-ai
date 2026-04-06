@@ -38,4 +38,3 @@ def main(path):
 if __name__ == '__main__':
     main()
     # schema_manager.get_data('select "First Name", "Row Id", "School E-mail" from test1 where "Row ID" < 2')
-

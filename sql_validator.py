@@ -15,7 +15,6 @@ from sqlparse.tokens import Keyword, Comment, Punctuation
 logger = logging.getLogger(__name__)
 database = 'database.db'
 
-
 def validate_query(query):
     try:
         connection = sql.connect(database)
@@ -32,12 +31,12 @@ def validate_query(query):
 
     except sql.OperationalError as e:
         logging.error(f"Invalid query: {query}, {e}", exc_info=True)
-        print("Query is invalid.")
+        print("SQL Query is invalid for thr database.")
         return False
     
     except ValueError as e:
         logging.error(f"Illegal query detected: {query}, {e}", exc_info=True)
-        print("Query has prohibited characters.")
+        print("SQL Query has prohibited characters.")
         return False
 
     finally:

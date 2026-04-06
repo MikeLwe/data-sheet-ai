@@ -254,3 +254,5 @@ def get_data(query, database):
         cursor.close()
         connection.close()
     
+if __name__ == '__main__':
+    print(get_schema('database.db'))

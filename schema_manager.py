@@ -252,3 +252,6 @@ def get_data(query, database):
         cursor.close()
         connection.close()
         return tabulate(rows, headers=columns, tablefmt="grid")
+    
+if __name__ == '__main__':
+    print(get_data("select * from test2", database))

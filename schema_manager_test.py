@@ -104,7 +104,7 @@ def test_get_data_3():
     assert correct_string == test_string
 
 def test_get_data_4():
-    """Table Display String Test on test1.csv"""
+    """Table Display String Test on test2.csv"""
     correct_string = """+----------+--------------+-------------+------+
 | Row ID   | First Name   | Unique ID   | ID   |
 +==========+==============+=============+======+

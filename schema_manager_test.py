@@ -67,14 +67,14 @@ def test_get_schema():
 def test_get_data_1():
     """Table Display String Test on test1.csv"""
     correct_string = """+----------+--------------+-------------+-----------------+
-    |   Row ID | First Name   | Last Name   | School E-mail   |
-    +==========+==============+=============+=================+
-    |        0 | Alice        | A           | alice@bu.edu    |
-    +----------+--------------+-------------+-----------------+
-    |        1 | Bryce        | B           | bryce@bu.edu    |
-    +----------+--------------+-------------+-----------------+
-    |        2 | Carlos       | C           | carl@bu.edu     |
-    +----------+--------------+-------------+-----------------+"""
+|   Row ID | First Name   | Last Name   | School E-mail   |
++==========+==============+=============+=================+
+|        0 | Alice        | A           | alice@bu.edu    |
++----------+--------------+-------------+-----------------+
+|        1 | Bryce        | B           | bryce@bu.edu    |
++----------+--------------+-------------+-----------------+
+|        2 | Carlos       | C           | carl@bu.edu     |
++----------+--------------+-------------+-----------------+"""
     test_query = 'select * from "test1"'
     test_string = schema_manager.get_data(test_query, database)
     assert correct_string == test_string
@@ -82,12 +82,12 @@ def test_get_data_1():
 def test_get_data_2():
     """Table Display String Test on test1.csv"""
     correct_string = """+----------+--------------+-------------+-----------------+
-    |   Row ID | First Name   | Last Name   | School E-mail   |
-    +==========+==============+=============+=================+
-    |        0 | Alice        | A           | alice@bu.edu    |
-    +----------+--------------+-------------+-----------------+
-    |        1 | Bryce        | B           | bryce@bu.edu    |
-    +----------+--------------+-------------+-----------------+"""
+|   Row ID | First Name   | Last Name   | School E-mail   |
++==========+==============+=============+=================+
+|        0 | Alice        | A           | alice@bu.edu    |
++----------+--------------+-------------+-----------------+
+|        1 | Bryce        | B           | bryce@bu.edu    |
++----------+--------------+-------------+-----------------+"""
     test_query = 'select * from "test1" where "Row ID" < 2'
     test_string = schema_manager.get_data(test_query, database)
     assert correct_string == test_string

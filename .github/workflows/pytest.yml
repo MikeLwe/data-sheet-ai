@@ -31,7 +31,7 @@ jobs:
       - run: pip install -r requirements.txt
 
       - name: Run Tests
-        run: pytest -v ${{ matrix.file_name }}
+        run: pytest ${{ matrix.file_name }}
 
       - name: Run Coverage
         run: |

@@ -159,15 +159,19 @@ def map_dtype_to_sql(dtype):
         return "TEXT"
 
 def make_backup(cursor, title):
+    #connect to the backup_key while having cursor connected to the database
     connection = sql.connect(backup_key)
     key = connection.cursor()
 
+    #create keys table if it doesn't exist and make a list of backup tables
     key.execute(f'CREATE TABLE IF NOT EXISTS keys ("Row ID" INTEGER, "Table Title" TEXT)')
 
     key.execute("SELECT COUNT(*) FROM keys")
     key_count = key.fetchone()[0]
 
     key.execute(f"INSERT INTO keys VALUES ({key_count}, '{title}')")
+
+    #connect backup tables database with true database and copy the specified table over
     cursor.execute(f'ATTACH DATABASE "{backup_data}" AS backup_data')
 
     new_title = f"{title}_{key_count}"
@@ -179,6 +183,8 @@ def make_backup(cursor, title):
     connection.commit()
     key.close()
     connection.close()
+
+    #return the new title so that outside function will know what the new name is
     return new_title
 
 def get_data(query):

@@ -240,8 +240,6 @@ def get_data(query, database):
         columns = [desc[0] for desc in cursor.description]
         rows = cursor.fetchall()
 
-        print(tabulate(rows, headers=columns, tablefmt="grid"))
-
     except sql.OperationalError:
         logging.error(f"The query is invalid. Query: {query}", exc_info=True)
         print("The query was somehow invalid.")
@@ -253,6 +251,4 @@ def get_data(query, database):
     finally:
         cursor.close()
         connection.close()
-    
-if __name__ == '__main__':
-    print(get_data("select * from test2 where ID < 0", database))
+        return tabulate(rows, headers=columns, tablefmt="grid")

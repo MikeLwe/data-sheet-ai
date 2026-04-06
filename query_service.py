@@ -12,7 +12,8 @@ def main(natural_query):
     try:
         test_query = sql_validator.validate_query(query)
         if test_query:
-            schema_manager.get_data(query, database)
+            table_content = schema_manager.get_data(query, database)
+            print(table_content)
         else:
             print("Validator Rejected Query")
 

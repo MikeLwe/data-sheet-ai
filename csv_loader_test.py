@@ -13,8 +13,9 @@ def test_read_csv_1():
         "Last Name": ["A", "B", "C"],
         "School E-mail": ["alice@bu.edu", "bryce@bu.edu", "carl@bu.edu"]
     })
-    with patch("builtins.input", side_effect=["datatables/test1.csv", ""]):
-        test_data, test_title = csv_loader.read_csv()
+    #place input automatically
+    with patch("builtins.input", side_effect=[""]):
+        test_data, test_title = csv_loader.read_csv("datatables/test1.csv")
         assert correct_data.equals(test_data)
         assert test_title == "test1"
 
@@ -25,7 +26,7 @@ def test_read_csv_2():
         "Unique ID": ["12563U"],
         "ID": [1234567]
     })
-    with patch("builtins.input", side_effect=["datatables/test2.csv", "Custom Table"]):
-        test_data, test_title = csv_loader.read_csv()
+    with patch("builtins.input", side_effect=["Custom Table"]):
+        test_data, test_title = csv_loader.read_csv("datatables/test2.csv")
         assert correct_data.equals(test_data)
         assert test_title == "Custom Table"

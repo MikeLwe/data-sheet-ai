@@ -11,17 +11,6 @@ backup_data = 'backup.db'
 #error log config already initialized, so unnecessary to reinitialize
 logger = logging.getLogger(__name__)
 
-def confirm(prompt="Are you sure you want to proceed? (y/n): "):
-    while True:
-        choice = input(prompt).strip().lower()
-        if choice in ("y", "yes", "Y", "Yes"):
-            return True
-        elif choice in ("n", "no", "N", "No"):
-            return False
-        else:
-            print("Please enter 'y' or 'n'.")
-            raise ValueError("Invalid User Input for Confirm Prompt.")
-
 def create_table(content, title):
     connection = sql.connect(database)
     cursor = connection.cursor()
@@ -157,6 +146,17 @@ def map_dtype_to_sql(dtype):
         return "DATETIME"
     else:
         return "TEXT"
+    
+def confirm(prompt="Are you sure you want to proceed? (y/n): "):
+    while True:
+        choice = input(prompt).strip().lower()
+        if choice in ("y", "yes", "Y", "Yes"):
+            return True
+        elif choice in ("n", "no", "N", "No"):
+            return False
+        else:
+            print("Please enter 'y' or 'n'.")
+            raise ValueError("Invalid User Input for Confirm Prompt.")
 
 def make_backup(cursor, title):
     #connect to the backup_key while having cursor connected to the database
@@ -212,5 +212,3 @@ def get_data(query):
         cursor.close()
         connection.close()
     
-if __name__ == '__main__':
-    print("test")

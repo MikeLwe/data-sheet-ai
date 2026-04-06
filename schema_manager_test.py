@@ -13,16 +13,16 @@ import sqlite3 as sql
 def test_col_schema_1():
     """Column Schema String Test on test1.csv"""
     correct_string = '"Row ID" INTEGER, "First Name" TEXT, "Last Name" TEXT, "School E-mail" TEXT'
-    with patch("builtins.input", side_effect=["datatables/test1.csv", ""]):
-        test_data, _ = csv_loader.read_csv()
+    with patch("builtins.input", side_effect=[""]):
+        test_data, _ = csv_loader.read_csv("datatables/test1.csv")
         test_string = schema_manager.col_schema(test_data)
         assert correct_string == test_string
 
 def test_col_schema_2():
     """Column Schema String Test on test2.csv"""
     correct_string = '"Row ID" INTEGER, "First Name" TEXT, "Unique ID" TEXT, "ID" INTEGER'
-    with patch("builtins.input", side_effect=["datatables/test2.csv", "Custom Table"]):
-        test_data, _ = csv_loader.read_csv()
+    with patch("builtins.input", side_effect=["Custom Table"]):
+        test_data, _ = csv_loader.read_csv("datatables/test2.csv")
         test_string = schema_manager.col_schema(test_data)
         assert correct_string == test_string
 

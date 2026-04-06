@@ -60,15 +60,55 @@ def test_table_checker_2():
 
 def test_get_schema():
     """Table Schema Prompt String Test on test_database.db"""
-    correct_string = """ - "test1" ("Row ID", ""First Name", "Last Name", "School E-mail") - "Custom Table" ("Row ID", "First Name", "Unique ID", "ID")"""
-    with patch("builtins.input", side_effect=[""]):
-        test_string = schema_manager.get_schema(database)
-        assert correct_string == test_string
+    correct_string = """ - "test1" ("Row ID", "First Name", "Last Name", "School E-mail") - "Custom Table" ("Row ID", "First Name", "Unique ID", "ID")"""
+    test_string = schema_manager.get_schema(database)
+    assert correct_string == test_string
 
-# def test_get_data_2():
-#     """Table Schema Prompt String Test on test2.csv"""
-#     correct_string = '"Custom Table" - ("First Name", "Unique ID", "ID")'
-#     with patch("builtins.input", side_effect=["Custom Table"]):
-#         test_data, _ = csv_loader.read_csv("datatables/test2.csv")
-#         test_string = schema_manager.get_schema(database)
-#         assert correct_string == test_string
+def test_get_data_1():
+    """Table Display String Test on test1.csv"""
+    correct_string = """+----------+--------------+-------------+-----------------+
+    |   Row ID | First Name   | Last Name   | School E-mail   |
+    +==========+==============+=============+=================+
+    |        0 | Alice        | A           | alice@bu.edu    |
+    +----------+--------------+-------------+-----------------+
+    |        1 | Bryce        | B           | bryce@bu.edu    |
+    +----------+--------------+-------------+-----------------+
+    |        2 | Carlos       | C           | carl@bu.edu     |
+    +----------+--------------+-------------+-----------------+"""
+    test_query = 'select * from "test1"'
+    test_string = schema_manager.get_data(test_query, database)
+    assert correct_string == test_string
+
+def test_get_data_2():
+    """Table Display String Test on test1.csv"""
+    correct_string = """+----------+--------------+-------------+-----------------+
+    |   Row ID | First Name   | Last Name   | School E-mail   |
+    +==========+==============+=============+=================+
+    |        0 | Alice        | A           | alice@bu.edu    |
+    +----------+--------------+-------------+-----------------+
+    |        1 | Bryce        | B           | bryce@bu.edu    |
+    +----------+--------------+-------------+-----------------+"""
+    test_query = 'select * from "test1" where "Row ID" < 2'
+    test_string = schema_manager.get_data(test_query, database)
+    assert correct_string == test_string
+
+def test_get_data_3():
+    """Table Display String Test on test2.csv"""
+    correct_string = """+----------+--------------+-------------+---------+
+|   Row ID | First Name   | Unique ID   |      ID |
++==========+==============+=============+=========+
+|        0 | Alice        | 12563U      | 1234567 |
++----------+--------------+-------------+---------+"""
+    test_query = 'select * from "Custom Table"'
+    test_string = schema_manager.get_data(test_query, database)
+    assert correct_string == test_string
+
+def test_get_data_4():
+    """Table Display String Test on test1.csv"""
+    correct_string = """+----------+--------------+-------------+------+
+| Row ID   | First Name   | Unique ID   | ID   |
++==========+==============+=============+======+
++----------+--------------+-------------+------+"""
+    test_query = 'select * from "Custom Table" where "ID" < 2'
+    test_string = schema_manager.get_data(test_query, database)
+    assert correct_string == test_string

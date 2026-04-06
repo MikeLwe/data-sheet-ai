@@ -255,4 +255,4 @@ def get_data(query, database):
         connection.close()
     
 if __name__ == '__main__':
-    print(get_schema('database.db'))
+    print(get_data("select * from test2 where ID < 0", database))

@@ -32,10 +32,7 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Run Tests
-        run: pytest -v ${{ matrix.file_name }}
-
-      - name: Run Coverage
+      - name: Run Coverage Tests
         run: |
           coverage run -m pytest -v ${{ matrix.file_name }}
           coverage report

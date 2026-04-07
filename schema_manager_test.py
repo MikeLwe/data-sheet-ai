@@ -105,7 +105,7 @@ def test_get_data_4():
     assert correct_string == test_string
 
 def test_table_append_rows():
-    """Test table_checker 2"""
+    """Test create_table user options"""
     with patch("builtins.input", side_effect=["Custom Table", "1"]):
         test_content, test_title = csv_loader.read_csv("datatables/test2.csv")
         schema_manager.create_table(test_content, test_title, database)

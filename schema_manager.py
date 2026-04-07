@@ -54,6 +54,7 @@ def create_table(content, title, database):
                     print("Appending row contents...")
                     cursor.execute(f"SELECT COUNT(*) FROM {title}")
                     existing_row_count = cursor.fetchone()[0]
+                    print(existing_row_count)
                     break
                 elif table_decision == 2:
                     #NEW NAME, make a table with a different name

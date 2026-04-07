@@ -52,7 +52,7 @@ def create_table(content, title, database):
                 if table_decision == 1:
                     #APPEND ROWS, append rows with matching columns, otherwise error
                     print("Appending row contents...")
-                    cursor.execute(f"SELECT COUNT(*) FROM {title}")
+                    cursor.execute(f'SELECT COUNT(*) FROM "{title}"')
                     existing_row_count = cursor.fetchone()[0]
                     print(existing_row_count)
                     break

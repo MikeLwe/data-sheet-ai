@@ -103,3 +103,19 @@ def test_get_data_4():
     test_query = 'select * from "Custom Table" where "ID" < 2'
     test_string = schema_manager.get_data(test_query, database)
     assert correct_string == test_string
+
+def test_table_append_rows():
+    """Test table_checker 2"""
+    with patch("builtins.input", side_effect=["Custom Table", "1"]):
+        test_content, test_title = csv_loader.read_csv("datatables/test2.csv")
+        schema_manager.create_table(test_content, test_title, database)
+        correct_string = """+----------+--------------+-------------+---------+
+|   Row ID | First Name   | Unique ID   |      ID |
++==========+==============+=============+=========+
+|        0 | Alice        | 12563U      | 1234567 |
++----------+--------------+-------------+---------+
+|        1 | Alice        | 12563U      | 1234567 |
++----------+--------------+-------------+---------+"""
+        test_query = 'select * from "Custom Table"'
+        test_string = schema_manager.get_data(test_query, database)
+        assert correct_string == test_string

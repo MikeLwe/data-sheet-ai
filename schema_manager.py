@@ -31,6 +31,9 @@ def create_table(content, title, database):
     #error detection for whether to create or append table
     table_exists = table_checker(cursor, title)
     title = sanitize_text(title)
+
+    #variable to remember table length to add later
+    existing_row_count = 0
     try:
         if table_exists:
             while True:
@@ -49,6 +52,8 @@ def create_table(content, title, database):
                 if table_decision == 1:
                     #APPEND ROWS, append rows with matching columns, otherwise error
                     print("Appending row contents...")
+                    cursor.execute(f"SELECT COUNT(*) FROM {title}")
+                    existing_row_count = cursor.fetchone()[0]
                     break
                 elif table_decision == 2:
                     #NEW NAME, make a table with a different name
@@ -105,7 +110,7 @@ def create_table(content, title, database):
     num_rows = len(content)
     all_rows = []
     for i in range(num_rows):
-        values = [i] + content.iloc[i].tolist()
+        values = [i+existing_row_count] + content.iloc[i].tolist()
         #Below is ChatGPT code to help avoid SQL Injection
         #creates a list with the placeholder ? for each column
         values = [

@@ -163,9 +163,7 @@ def test_table_backup_data_yes():
 +----------+--------------+-------------+---------+"""
         test_query_3 = 'select * from "New Custom Table_0"'
         test_string_3 = schema_manager.get_data(test_query_3, backup_data)
-        assert correct_string_1 == test_string_1
-        assert correct_string_2 == test_string_2
-        assert correct_string_3 == test_string_3
+        assert correct_string_1 == test_string_1 and correct_string_2 == test_string_2 and correct_string_3 == test_string_3
 
 def test_table_backup_data_no_yes():
     """Test create_table user options"""
@@ -195,6 +193,4 @@ def test_table_backup_data_no_yes():
 +----------+--------------+-------------+---------+"""
         test_query_3 = 'select * from "New Custom Table_1"'
         test_string_3 = schema_manager.get_data(test_query_3, backup_data)
-        assert correct_string_1 == test_string_1
-        assert correct_string_2 == test_string_2
-        assert correct_string_3 == test_string_3
+        assert correct_string_1 == test_string_1 and correct_string_2 == test_string_2 and correct_string_3 == test_string_3

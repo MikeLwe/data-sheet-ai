@@ -149,7 +149,7 @@ def test_table_backup_data_yes():
 +----------+--------------+-------------+---------+"""
         test_query_1 = 'select * from "New Custom Table"'
         test_string_1 = schema_manager.get_data(test_query_1, database)
-        correct_string_2 = """+----------+---------------+
+        correct_string_2 = """+----------+------------------+
 |   Row ID | Table Title      |
 +==========+==================+
 |        0 | New Custom Table |
@@ -179,7 +179,7 @@ def test_table_backup_data_no_yes():
 +----------+--------------+-------------+---------+"""
         test_query_1 = 'select * from "New Custom Table"'
         test_string_1 = schema_manager.get_data(test_query_1, database)
-        correct_string_2 = """+----------+---------------+
+        correct_string_2 = """+----------+------------------+
 |   Row ID | Table Title      |
 +==========+==================+
 |        0 | New Custom Table |

@@ -123,7 +123,7 @@ def test_get_data_5():
 +--------------+-------------+--------------------------+"""
         test_query ="select \"First Name\", \"Last Name\", \"Country\" from \"Customer Table\" where Country = \"United States of America\""
         test_string = schema_manager.get_data(test_query, database)
-        assert correct_string == test_content
+        assert correct_string == test_string
 
 
 def test_table_append_rows():

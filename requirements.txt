@@ -4,3 +4,4 @@ pandas
 tabulate
 sqlparse
 openai
+python-dotenv

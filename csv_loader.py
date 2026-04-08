@@ -4,7 +4,6 @@ CSV Loader used to read csv files from a path and send it to the schema_manager
 
 import pandas
 import logging
-# import sqlite3 as sql
 from pathlib import Path
 import schema_manager
 
@@ -50,4 +49,3 @@ def main(path):
 
 if __name__ == '__main__':
     main()
-    # schema_manager.get_data('select "First Name", "Row Id", "School E-mail" from test1 where "Row ID" < 2')

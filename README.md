@@ -17,7 +17,7 @@ The main part of the system is the CLI Interface, where the user is able to inte
 - This is to centralize all the sqlite functions that edit the database to keep track of any errors that occur and makes it easier to prevent the llm or the query service from affecting the database
 
 2. Added cli_interface rather than just having a main file run once based on an input
-- I wanted to have the ability to run multiple queries without restarting the application and be able to upload multiple CSVs in one go.
+- I wanted to have the ability to run multiple queries without restarting the application and be able to upload multiple CSVs in during one session.
 
 3. Implemented a Soft Delete option for when there is a table with the same title as what the user requested, saving the "deleted" tables into another database with a backup_key database to remember the multiple types of tables. (Table title notation is f"{title}_{key_value}")
 - This protects against accidental deletes and keeps a proper records of all the tables, along with avoiding errors with duplicate names.
@@ -31,14 +31,12 @@ The main part of the system is the CLI Interface, where the user is able to inte
 6. Use input function and confirmation with infinite while loop to allow user to decide what to do
 - For user interface to be better in case a typo occurs or the user misunderstands the prompt, I allow the user to decide again if the want to continue performing that task.
 
+## Future Improvements
+- Add queues to allow multiple users to access the program at once
+- Include hybrid databases option as it allows merging inside one database and preserves other databses
+- Add a method to deal with appending column data to an existing table
+- Implement a user interface that users can access to display the data better rather than reading from a terminal (i.e. web app with excel sheets visuals)
 
-Thigns to Consider/Look At:
-- Consider classes, queues, multiple systems
-- Design choice: Why use Pandas?
-- Multiple Databases or all in one database?
-- Multiple Databases: security, load times shorter | managing multiple databases is hard
-- Single Database: can join databases together | one database crashes/secrutiy risk
-- Hybrid: try going for this (ask user to make new database or not)
 
 Problems to Fix:
 - [x] Open and close connections

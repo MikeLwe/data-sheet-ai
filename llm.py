@@ -28,6 +28,3 @@ def query_to_sql(natural_query):
     response = client.responses.create(model="gpt-5.4",input=prompt)
 
     return response.output_text
-
-if __name__ == '__main__':
-    print("test")

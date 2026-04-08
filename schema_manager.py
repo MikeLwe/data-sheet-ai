@@ -54,7 +54,6 @@ def create_table(content, title, database, backup_key, backup_data):
                     print("Appending row contents...")
                     cursor.execute(f'SELECT COUNT(*) FROM "{title}"')
                     existing_row_count = cursor.fetchone()[0]
-                    print(existing_row_count)
                     break
                 elif table_decision == 2:
                     #NEW NAME, make a table with a different name
@@ -291,6 +290,3 @@ def get_data(query, database):
         cursor.close()
         connection.close()
         return tabulate(rows, headers=columns, tablefmt="grid")
-    
-if __name__ == '__main__':
-    print(get_data("select * from keys", backup_key))

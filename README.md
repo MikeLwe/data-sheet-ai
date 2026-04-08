@@ -25,8 +25,8 @@ The main part of the system is the CLI Interface, where the user is able to inte
 4. Used pandas to read the CSV in the csv_loader.
 - This is because the pandas DataFrame is great for readability, similar to json, when it reads a csv file.
 
-5. Did not implement appending columns to an existing table and only allowing rows to be appended.
-- If the user wants to append columns for all the rows that exist in the table, I think it is better to archive the old data and replace the table rather than appending a column for efficiency. This also reduces the complexity of the code.
+5. Prevented the LLM from running any SQL code on the database
+- This protects the database from any potentially dangerous code that could alter or corrupt the database as this will be out of our control.
 
 6. Use input function and confirmation with infinite while loop to allow user to decide what to do
 - For user interface to be better in case a typo occurs or the user misunderstands the prompt, I allow the user to decide again if the want to continue performing that task.
@@ -36,6 +36,7 @@ The main part of the system is the CLI Interface, where the user is able to inte
 - Include hybrid databases option as it allows merging inside one database and preserves other databses
 - Add a method to deal with appending column data to an existing table
 - Implement a user interface that users can access to display the data better rather than reading from a terminal (i.e. web app with excel sheets visuals)
+- Implement a way for the LLM to try multiple variations of natural language inputs (ex: USA -> United States of America, name -> nombre, etc.)
 
 
 Problems to Fix:

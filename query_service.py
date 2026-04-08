@@ -12,7 +12,7 @@ import logging
 logger = logging.getLogger(__name__)
 database = 'database.db'
 
-def main(natural_query):
+def run_query(natural_query, database):
     """
     Runs the LLM with the natural_query as the input and validates the LLM's query.
     Prints the contents of the table with schema_manager's get_data function 
@@ -24,6 +24,7 @@ def main(natural_query):
         if test_query:
             table_content = schema_manager.get_data(query, database)
             print(table_content)
+            return table_content #for testing purposes
         else:
             print("Validator Rejected Query")
 
@@ -33,6 +34,8 @@ def main(natural_query):
                       exc_info=True)
         print("An Unexpected Error Occurred.")
 
-if __name__ == '__main__':
-    query = input("What would you like to get?\n")
-    main(query)
+def main(natural_query):
+    """
+    Runs the query with a database
+    """
+    run_query(natural_query, database)

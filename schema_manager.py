@@ -18,7 +18,7 @@ backup_data = 'backup.db'
 #error log config already initialized, so unnecessary to reinitialize
 logger = logging.getLogger(__name__)
 
-def create_table(content, title, database):
+def create_table(content, title, database, backup_key, backup_data):
     """
     Creates a table based on the content and title in the selected database
     """

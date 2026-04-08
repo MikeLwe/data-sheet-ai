@@ -46,7 +46,7 @@ def main(path):
     to create a table
     """
     file_content, table_title = read_csv(path)
-    schema_manager.create_table(file_content, table_title, 'database.db')
+    schema_manager.create_table(file_content, table_title, 'database.db', 'backup_key.db', 'backup.db')
 
 if __name__ == '__main__':
     main()

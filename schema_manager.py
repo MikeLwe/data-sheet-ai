@@ -265,7 +265,6 @@ def get_schema(database):
         connection.close()
         return prompt_tables
 
-
 def get_data(query, database):
     """Returns the contents of a table in database based on the SQL query"""
     connection = sql.connect(database)
@@ -277,16 +276,17 @@ def get_data(query, database):
         #ChatGPT help for formatting
         columns = [desc[0] for desc in cursor.description]
         rows = cursor.fetchall()
+        if len(rows) == 0:
+            return "No elements found matching that exact query. Please try again."
 
     except sql.OperationalError:
         logging.error(f"The query is invalid. Query: {query}", exc_info=True)
-        print("The query was somehow invalid.")
+        print("The query was invalid.")
 
     except Exception as e:
         logging.error("Unexpected error occurred", exc_info=True)
         print("Something went wrong.")
 
-    finally:
-        cursor.close()
-        connection.close()
-        return tabulate(rows, headers=columns, tablefmt="grid")
+    cursor.close()
+    connection.close()
+    return tabulate(rows, headers=columns, tablefmt="grid")

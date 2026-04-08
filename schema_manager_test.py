@@ -106,6 +106,29 @@ def test_get_data_4():
     test_string = schema_manager.get_data(test_query, database)
     assert correct_string == test_string
 
+def test_get_data_5():
+    """Table Display String Test on customers.csv"""
+    with patch("builtins.input", side_effect=["Customer Table"]):
+        test_content, test_title = csv_loader.read_csv("datatables/customers.csv")
+        schema_manager.create_table(test_content, test_title, database, backup_key, backup_data)
+        correct_string = """+--------------+-------------+--------------------------+                         
+| First Name   | Last Name   | Country                  |
++==============+=============+==========================+
+| Rickey       | Mays        | United States of America |
++--------------+-------------+--------------------------+
+| Kurt         | Prince      | United States of America |
++--------------+-------------+--------------------------+
+| Johnny       | Randolph    | United States of America |
++--------------+-------------+--------------------------+
+| Bryan        | Sampson     | United States of America |
++--------------+-------------+--------------------------+
+| Molly        | Prince      | United States of America |
++--------------+-------------+--------------------------+"""
+        test_query ="select \"First Name\", \"Last Name\", \"Country\" from customers where Country = \"United States of America\""
+        test_string = schema_manager.get_data(test_query, database)
+        assert correct_string == test_content
+
+
 def test_table_append_rows():
     """Test create_table user options"""
     with patch("builtins.input", side_effect=["Custom Table", "1"]):

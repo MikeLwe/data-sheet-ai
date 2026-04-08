@@ -139,3 +139,9 @@ Traceback (most recent call last):
     cursor.execute(f'DROP TABLE "{backup_title}"')
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 sqlite3.OperationalError: near "Table_6": syntax error
+2026-04-08 16:55:03,532 - root - ERROR - The query is invalid. Query: select * from test2 where Country = "United States of America"
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 275, in get_data
+    cursor.execute(query)
+    ~~~~~~~~~~~~~~^^^^^^^
+sqlite3.OperationalError: no such column: Country

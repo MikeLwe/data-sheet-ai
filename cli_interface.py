@@ -9,7 +9,14 @@ import logging
 import query_service
 import csv_loader
 
-logger = logging.getLogger(__name__)
+#ChatGPT helped
+#error log file config, works globally as the program should start here
+logging.basicConfig(
+    filename="error_log.txt",          # file to write to
+    level=logging.ERROR,           # only log errors and above
+    #time at error - name of file error came from - severity of error - message
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 
 def query_handler(args):
     """

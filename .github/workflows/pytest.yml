@@ -22,6 +22,8 @@ jobs:
             file_name: schema_manager_test.py
           - test_name: SQL Validator
             file_name: sql_validator_test.py
+          - test_name: Query and LLM
+            file_name: query_llm_test.py
 
     steps:
       - uses: actions/checkout@v4

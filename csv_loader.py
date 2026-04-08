@@ -7,14 +7,7 @@ import logging
 from pathlib import Path
 import schema_manager
 
-#ChatGPT helped
-#error log file config, works globally
-logging.basicConfig(
-    filename="error_log.txt",          # file to write to
-    level=logging.ERROR,           # only log errors and above
-    #time at error - name of file error came from - severity of error - message
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
+logger = logging.getLogger(__name__)
 
 def read_csv(path):
     """

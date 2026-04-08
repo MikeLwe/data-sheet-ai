@@ -98,10 +98,7 @@ def test_get_data_3():
 
 def test_get_data_4():
     """Table Display String Test on test2.csv"""
-    correct_string = """+----------+--------------+-------------+------+
-| Row ID   | First Name   | Unique ID   | ID   |
-+==========+==============+=============+======+
-+----------+--------------+-------------+------+"""
+    correct_string = """No elements found matching that exact query. Please try again."""
     test_query = 'select * from "Custom Table" where "ID" < 2'
     test_string = schema_manager.get_data(test_query, database)
     assert correct_string == test_string
@@ -124,7 +121,7 @@ def test_get_data_5():
 +--------------+-------------+--------------------------+
 | Molly        | Prince      | United States of America |
 +--------------+-------------+--------------------------+"""
-        test_query ="select \"First Name\", \"Last Name\", \"Country\" from customers where Country = \"United States of America\""
+        test_query ="select \"First Name\", \"Last Name\", \"Country\" from \"Customer Table\" where Country = \"United States of America\""
         test_string = schema_manager.get_data(test_query, database)
         assert correct_string == test_content
 

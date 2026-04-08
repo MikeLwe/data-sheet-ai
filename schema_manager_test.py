@@ -150,10 +150,10 @@ def test_table_backup_data_yes():
         test_query_1 = 'select * from "New Custom Table"'
         test_string_1 = schema_manager.get_data(test_query_1, database)
         correct_string_2 = """+----------+---------------+
-|   Row ID | Table Title   |
-+==========+===============+
-|        0 | test1         |
-+----------+---------------+"""
+|   Row ID | Table Title      |
++==========+==================+
+|        0 | New Custom Table |
++----------+------------------+"""
         test_query_2 = 'select * from "keys"'
         test_string_2 = schema_manager.get_data(test_query_2, backup_key)
         correct_string_3 = """+----------+--------------+-------------+---------+
@@ -182,9 +182,9 @@ def test_table_backup_data_no_yes():
         correct_string_2 = """+----------+---------------+
 |   Row ID | Table Title      |
 +==========+==================+
-|        0 | test1            |
+|        0 | New Custom Table |
 +----------+------------------+
-|        1 | Custom Table     |
+|        1 | New Custom Table |
 +----------+------------------+"""
         test_query_2 = 'select * from "keys"'
         test_string_2 = schema_manager.get_data(test_query_2, backup_key)

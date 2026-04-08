@@ -127,3 +127,15 @@ Traceback (most recent call last):
     cursor.execute("EXPLAIN " + query)
     ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
 sqlite3.OperationalError: near "equals": syntax error
+2026-04-07 20:44:34,265 - root - ERROR - Unexpected error occurred
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 79, in create_table
+    cursor.execute(f"DROP TABLE {backup_title}")
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: near "Table_5": syntax error
+2026-04-07 20:47:31,136 - root - ERROR - Unexpected error occurred
+Traceback (most recent call last):
+  File "c:\Users\micha\OneDrive\Desktop\Boston University Class Files\2026 Junior Spring\EC 530 Software Engineering Principles\Repositories\data-sheet-ai\schema_manager.py", line 79, in create_table
+    cursor.execute(f'DROP TABLE "{backup_title}"')
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: near "Table_6": syntax error

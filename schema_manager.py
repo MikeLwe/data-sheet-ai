@@ -29,8 +29,8 @@ def create_table(content, title, database):
     col_head = col_schema(content)
 
     #error detection for whether to create or append table
-    table_exists = table_checker(cursor, title)
     title = sanitize_text(title)
+    table_exists = table_checker(cursor, title)
 
     #variable to remember table length to add later
     existing_row_count = 0
@@ -74,10 +74,10 @@ def create_table(content, title, database):
                     print("Replacing a table CANNOT be undone.")
                     misinput_safety = confirm()
                     if misinput_safety:
-                        backup_title = make_backup(cursor, title)
+                        backup_title = make_backup(cursor, title, backup_key, backup_data)
                         print("Deleting old table...")
-                        cursor.execute(f"DROP TABLE {backup_title}")
-                        cursor.execute(f"CREATE TABLE IF NOT EXISTS {title} ({col_head})")
+                        cursor.execute(f'DROP TABLE "{backup_title}"')
+                        cursor.execute(f'CREATE TABLE IF NOT EXISTS "{title}" ({col_head})')
                         break
 
                 elif table_decision == 4:
@@ -200,7 +200,7 @@ def sanitize_text(text):
     text = re.sub(r"[^A-Za-z0-9_ ]+", "", text)
     return text
 
-def make_backup(cursor, title):
+def make_backup(cursor, title, backup_key, backup_data):
     """Creates a backup of a table named title in the database that the cursor is pointing to"""
     #connect to the backup_key while having cursor connected to the database
     connection = sql.connect(backup_key)
@@ -293,4 +293,4 @@ def get_data(query, database):
         return tabulate(rows, headers=columns, tablefmt="grid")
     
 if __name__ == '__main__':
-    print(get_data("select * from test2", database))
+    print(get_data("select * from keys", backup_key))

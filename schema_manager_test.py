@@ -108,7 +108,7 @@ def test_get_data_5():
     with patch("builtins.input", side_effect=["Customer Table"]):
         test_content, test_title = csv_loader.read_csv("datatables/customers.csv")
         schema_manager.create_table(test_content, test_title, database, backup_key, backup_data)
-        correct_string = """+--------------+-------------+--------------------------+                         
+        correct_string = """+--------------+-------------+--------------------------+
 | First Name   | Last Name   | Country                  |
 +==============+=============+==========================+
 | Rickey       | Mays        | United States of America |
